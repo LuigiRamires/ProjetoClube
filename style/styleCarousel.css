@@ -1,0 +1,45 @@
+/*
+Removes white gap between slides - chagnge to base color of slide images
+*/
+.carousel {
+    background:#007aeb;
+  }
+  
+  /*
+  Forces image to be 100% width and not max width of 100%
+  */
+  .carousel-item .img-fluid {
+    width:100%;
+  }
+  
+  /* 
+  anchors are inline so you need ot make them block to go full width
+  */
+  .carousel-item a {
+    display: block;
+    width:100%;
+  }
+
+  .btn-carousel{
+      background-color: white;
+      color: #2b2e4a;
+      padding-left: 35px;
+      padding-right: 35px;
+      padding-top: 25px;
+      padding-bottom: 25px;
+      margin-bottom: 100px;
+      font-family: 'Kulim Park', sans-serif;
+      transition: 1s;
+      text-transform: uppercase;
+  }
+
+  a, a:hover{
+    color: #2b2e4a;
+  }
+
+  .btn-carousel:hover{
+    -webkit-animation: swing 1s ease;
+    animation: swing 1s ease;
+    -webkit-animation-iteration-count: 1;
+    animation-iteration-count: 1;   
+  }
