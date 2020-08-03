@@ -43,7 +43,7 @@
             <a class="nav-link nav-tamanho" href="#">Planos</a>
           </li>
           <li class="nav-item marginItens">
-            <a class="nav-link nav-tamanho" href="#">Login</a>
+            <a class="nav-link nav-tamanho" href="indexLogin.php">Login</a>
           </li>
         </ul>
 
@@ -65,7 +65,7 @@
           </picture>
           <div class="carousel-caption">
             <div>
-              <span class="btn btn-carousel"><a href="indexCadastro.php">CADASTRE-SE</a></span>
+              <span class="btn btn-carousel"><a href="indexSociosCadastrar.php">CADASTRE-SE</a></span>
             </div>
           </div>
         </div>
@@ -181,7 +181,7 @@
         <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
           <h6 class="text-uppercase font-weight-bold mb-4">Associados</h6>
           <ul class="list-unstyled mb-0">
-            <li class="mb-2"><a href="#" class="footer-text">Login</a></li>
+            <li class="mb-2"><a href="indexLogin.php" class="footer-text">Login</a></li>
             <li class="mb-2"><a href="#" class="footer-text">Cadastre-se</a></li>
           </ul>
         </div>

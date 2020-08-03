@@ -9,9 +9,15 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-        <link rel="stylesheet" href="style/styleLogin.css">
-
-    <title>Clube SPEtec</title>
+		<link rel="stylesheet" href="style/styleLogin.css">
+		<link rel="stylesheet" href="style/styleTabelas.scss">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+		<title>Clube SPEtec</title>
+    <link rel="shortcut icon" href="img/club-logo.ico" />
 </head>
 
 <body class="my-login-page">
@@ -20,27 +26,27 @@
 			<div class="row justify-content-md-center h-100">
 				<div class="card-wrapper">
 					<div class="brand">
-						<img src="img/logo.jpg" alt="logo">
+						<img src="img/club-logo.png" alt="logo">
 					</div>
 					<div class="card fat">
 						<div class="card-body">
 							<h4 class="card-title">Login</h4>
-							<form method="POST" class="my-login-validation" novalidate="">
+							<form method="POST" class="my-login-validation" action="ope.php" id="formlogin" name="formlogin" novalidate="">
 								<div class="form-group">
-									<label for="email">Digite seu e-mail</label>
-									<input id="email" type="email" class="form-control" name="email" value="" required autofocus>
+									<label for="login">Digite o número do seu RG</label>
+									<input name="login" id="login" type="text" class="form-control" value="" required autofocus>
 									<div class="invalid-feedback">
-										O e-mail digitado é inválido
+										O RG digitado é inválido
 									</div>
 								</div>
 
 								<div class="form-group">
-									<label for="password">Senha
+									<label for="senha">Senha
 										<a href="indexReset.php" class="float-right">
 											Esqueceu a senha?
 										</a>
 									</label>
-									<input id="password" type="password" class="form-control" name="password" required data-eye>
+									<input type="password" class="form-control" name="senha" id="senha" required data-eye>
 								    <div class="invalid-feedback">
 								    	Informe sua senha
 							    	</div>
@@ -54,12 +60,12 @@
 								</div>
 
 								<div class="form-group m-0">
-									<button type="submit" class="btn btn-primary btn-block">
+									<button type="submit" class="btn btn-primary btn-block" value="LOGAR  ">
 										Login
 									</button>
 								</div>
 								<div class="mt-4 text-center">
-									Não tem uma conta? <a href="indexRegistrar.php">Crie uma</a>
+									Não tem uma conta? <a href="indexSocioCadastrar.php">Crie uma</a>
 								</div>
 							</form>
 						</div>
@@ -71,6 +77,23 @@
 			</div>
 		</div>
 	</section>
+	<p>
+            <?php 
+			//Recuperando o valor da variável global, os erro de login.
+			if(isset($_SESSION['loginErro'])){
+                echo $_SESSION['loginErro'];
+                unset($_SESSION['loginErro']);
+            }?>
+        </p>
+        <p>
+            <?php 
+			//Recuperando o valor da variável global, deslogado com sucesso.
+            if(isset($_SESSION['logindeslogado'])){
+                echo $_SESSION['logindeslogado'];
+                unset($_SESSION['logindeslogado']);
+            }
+            ?>
+        </p>
 
 
     <!-- JavaScript (Opcional) -->

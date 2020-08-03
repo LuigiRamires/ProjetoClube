@@ -13,7 +13,8 @@
             header('location:index.php');
         }
  
-        $sql = "SELECT nm_socio FROM tb_socio";
+        $sql = "SELECT nm_socio FROM tb_socio WHERE nm_rg_socio ='".$_SESSION['login']."'
+";
         $resultado = mysqli_query($con, $sql) or die ("Erro ao retornar o valor do banco de dados.");
         while ($registro = mysqli_fetch_array($resultado)){
             
@@ -23,7 +24,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clube SPEtec</title>
-    <link rel="shortcut icon" href="img/club-logo.ico" />    
+    <link rel="shortcut icon" href="img/club-logo.ico" />
     <link rel="stylesheet" href="style/styleLogou.css">
     <link rel="stylesheet" href="style/styleTabelas.scss">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
@@ -71,7 +72,7 @@
 
         <!-- Page Content  -->
         <div id="content" class="p-4 p-md-5 pt-5">
-            <h2 class="mb-4">Sócios</h2>
+            <h2 class="mb-4">Aula - Ginástica</h2>
             <?php
 
                     $con = mysqli_connect("127.0.0.1", "root", "", "bd_clube") or die
@@ -86,45 +87,30 @@
     
                     switch ($acao) {
                         case 'montar':
-                            $sql = "SELECT * FROM tb_socio WHERE cod_socio = '$cod'"; //Prestar atenção aqui!!! Se der erro colocar "user id = ". $id;
+                            $sql = "SELECT * FROM tb_pagamento WHERE cod_pagamento = '$cod'"; //Prestar atenção aqui!!! Se der erro colocar "user id = ". $id;
                             $resultado = mysqli_query($con, $sql) or die ("Erro ao retornar o valor do banco de dados.");
-                            echo "<form method='post' name='dados' action='indexSocios.php?acao=atualizar' onSubmit='return enviardados();'>";
+                            echo "<form method='post' name='dados' action='indexAula2.php?acao=atualizar' onSubmit='return enviardados();'>";
                             echo "<table width='588' border='0' align='center'>";
     
                             while($registro = mysqli_fetch_array($resultado)){
                                 echo "<tr>";
-                                echo "<td width='118'><font size='1' face='Verdana, Arial, Helvetica, sans-serif'>Código:</font></td>";
+                                echo "<td width='118'><font size='1' face='Verdana, Arial, Helvetica, sans-serif'>Código do pagamento:</font></td>";
                                 echo "<td width='460'>";
                                 echo " <input name='id' type='text' class='formbutton' id='id' size='52' maxlength='150' value=".$cod." readonly>";
                                 echo "</td>";
                                 echo "</tr>";
     
                                 echo "<tr>";
-                                echo "<td width='118'><font size='1' face='Verdana, Arial, Helvetica, sans-serif'>Nome completo:</font></td>";
+                                echo "<td width='118'><font size='1' face='Verdana, Arial, Helvetica, sans-serif'>Código da aula:</font></td>";
                                 echo "<td width='460'>";
-                                echo " <input name='nome' type='text' class='formbutton' id='nome' size='52' maxlength='150' value=".$registro['nm_socio'].">";
+                                echo " <input name='codaula' type='text' class='formbutton' id='codaula' size='52' maxlength='150' value=".$registro['cod_aula'].">";
                                 echo "</td>";
                                 echo "</tr>";
     
                                 echo "<tr>";
-                                echo "<td width='118'><font size='1' face='Verdana, Arial, Helvetica, sans-serif'>Data admissão:</font></td>";
+                                echo "<td width='118'><font size='1' face='Verdana, Arial, Helvetica, sans-serif'>Código sócio:</font></td>";
                                 echo "<td width='460'>";
-                                echo " <input name='dataadmis' type='date' class='formbutton' id='dataadmis' size='52' maxlength='150' value=".$registro['dt_admissao_socio'].">";
-                                echo "</td>";
-                                echo "</tr>";
-    
-                                echo "<tr>";
-                                echo "<td width='118'><font size='1' face='Verdana, Arial, Helvetica, sans-serif'>RG:</font></td>";
-                                echo "<td width='460'>";
-                                echo " <input name='rg' type='text' class='formbutton' id='rg' value=".$registro['nm_rg_socio'].">";
-                                echo "</td>";
-                                echo "</tr>";
-        
-                                echo "<tr>";
-                                echo "<td><font face='Verdana, Arial, Helvetica, sans-serif'><font size='1'>Data de nascimento:</font></font></td>";
-                                echo "<td rowspan='2'><font size='2'>";
-                                echo " <input name='datanasc' type='date' class='formbutton' id='datanasc' value=".$registro['dt_nasc_socio'].">";
-                                echo "</font>";
+                                echo " <input name='codsocio' type='text' class='formbutton' id='codsocio' size='52' maxlength='150' value=".$registro['cod_socio'].">";
                                 echo "</td>";
                                 echo "</tr>";
     
@@ -133,7 +119,7 @@
                                 echo "<td>";
                                 echo "<input name='Submit' type='submit'  class='formobjects' value='Enviar dados'>";
                                 echo "<input name='Reset' type='reset' class='formobjects' value='Redefinir'>";
-                                echo "<button type='submit' formaction='indexSocios.php?acao=selecionar'>Selecionar</button>";
+                                echo "<button type='submit' formaction='indexAula2.php?acao=selecionar'>Selecionar</button>";
                                 echo"</td>";
                                 echo "</tr></th>";
                                 echo"</form>";
@@ -144,14 +130,11 @@
                         break;
 
                         case 'atualizar':
-                    
                             $id = $_POST['id'];
-                            $nome = $_POST['nome'];
-                            $dataadmis = $_POST['dataadmis'];
-                            $rg = $_POST['rg'];
-                            $datanasc = $_POST['datanasc'];
+                            $nome = $_POST['codaula'];
+                            $email = $_POST['codsocio'];
                     
-                            $sql = "UPDATE tb_socio SET nm_socio = '" .$nome."', dt_admissao_socio = '".$dataadmis."', nm_rg_socio = '".$rg."', dt_nasc_socio = '".$datanasc."'WHERE cod_socio = '" .$id."'";
+                            $sql = "UPDATE tb_pagamento SET cod_aula = '" .$nome."', cod_socio = '".$email."' WHERE cod_pagamento = '" .$id."'";
                     
                             if(!mysqli_query($con, $sql)){
                                 die("Erro ao inserir os dados: ". mysqli_error($con, $sql));
@@ -160,106 +143,85 @@
                                 echo("<script>alert('Dados atualizados com sucesso.');</script>");
                             }
                             mysqli_close($con);
-                            header("Location:indexSocios.php?acao=selecionar");
-                            break;
+                            header("Location:indexAula2.php?acao=selecionar");
+                        break;
+    
     
                         case 'inserir':
-                            $nome = $_POST['nome'];
-                            $dataadmis = $_POST['dataadmis'];
-                            $rg = $_POST['rg'];
-                            $datanasc = $_POST['datanasc'];
-                            $senha = $_POST['senha'];
-                            $ddd = $_POST['ddd'];
-                            $numero = $_POST['numero'];
-                            $nmend = $_POST['nm_end'];
-                            $cep = $_POST['cep_end'];
-                            $bairro = $_POST['bairro_end'];
-                            $cidade = $_POST['cidade_end'];
-                            $estado = $_POST['estado_end'];
+                            $aula = $_POST['codaula'];
+                            $socio = $_POST['codsocio'];
     
     
-                            $sql = "INSERT INTO tb_socio (nm_socio, dt_admissao_socio, nm_rg_socio, dt_nasc_socio, senha_login) VALUES ('$nome','$dataadmis', '$rg', '$datanasc', '$senha')";
-                            $sql2 = "INSERT INTO tb_telefone (cod_socio, ddd_telefone, num_telefone) VALUES (LAST_INSERT_ID(), '$ddd','$numero')";
-                            $sql3 = "INSERT INTO tb_endereco (cod_socio, nm_end, cep_end, bairro_end, cidade_end, estado_end) VALUES (LAST_INSERT_ID(), '$nmend','$cep', '$bairro', '$cidade', '$estado')";
-                            /*if (mysqli_query($con, $sql)) {
+                            $sql = "INSERT INTO tb_pagamento (cod_aula, cod_socio) VALUES ('$aula','$socio')";
+                            if (mysqli_query($con, $sql)) {
                                 echo "New record created successfully";
                             } else {
                                 echo "Error: " . $sql . "<br>" . mysqli_error($con);
-                            }*/
-    
-                            if(!mysqli_query($con, $sql)){
-                                die("Erro ao inserir os dados: ".mysqli_error($con));
-                            } else if (!mysqli_query($con, $sql3)){
-                                die("Erro ao inserir os dados: ".mysqli_error($con));
-                            } 
-                            else{
-                               echo "<script>alert('Dados inseridos com sucesso!');</script>";
                             }
-                            
                             mysqli_close($con);
-                            header("Location:indexSocios.php?acao=selecionar");
+                            header("Location:indexAula2.php?acao=selecionar");
                         break;
-
+    
                         case 'deletar':
-                            $id = $_GET['id'];
-                    
-                            $sql = "DELETE FROM tb_socio WHERE cod_socio = '" .$id."'";
-                            $sql2 = "DELETE FROM tb_endereco WHERE cod_socio = '" .$id."'";
-
-
-                            if(!mysqli_query($con, $sql2)){
-                                die("Erro ao inserir os dados: ". mysqli_error($con));
-                            }
-                            else if(!mysqli_query($con, $sql)){
-                                die("Erro ao inserir os dados: ". mysqli_error($con));
-                            }
-                            else{
-                                echo("<script>alert('Dados deletados com sucesso.');</script>");
-                            }
-                            mysqli_close($con);
-                            header("Location:indexSocios.php?acao=selecionar");
-                            break;
+    
+                        $cod = $_GET['id'];
+                        mysqli_query($con, "DELETE FROM tb_pagamento WHERE cod_pagamento = $cod");
+    
+                        header("Location:indexAula2.php?acao=selecionar");
+                        break;
     
                         case 'selecionar':
                             date_default_timezone_set('America/Sao_Paulo');
                             header("Content-type: text/html; charset=utf-8");
                             echo"<meta charset='UTF-8'>";
-                            echo "<center><a href='indexSociosCadastrar.php'><img src='img/insert_crud.png' alt='Inserir' title='Inserir Registro' registro'></center><br/>";
+                            echo "<center><a href='indexAulas2Cadastrar.php'><img src='img/insert_crud.png' alt='Inserir' title='Inserir Registro' registro'></center><br/>";
                             echo "<center><table border=1>";
                             echo "<tr>";
-                            echo "<th>CÓDIGO</th>";
-                            echo "<th>NOME</th>";
-                            echo "<th>DATA ADMISSÃO</th>";
-                            echo "<th>RG</th>";
-                            echo "<th>DATA NASCIMENTO</th>";
+                            echo "<th>CÓDIGO AULA</th>";
+                            echo "<th>MODALIDADE</th>";
+                            echo "<th>VALOR</th>";
+                            echo "<th>VAGAS</th>";
+                            echo "<th>HORÁRIO</th>";
+                            echo "<th>NOME SÓCIO</th>";
+                            echo "<th>CÓDIGO SÓCIO</th>";
                             echo "<th>AÇÃO</th>";
                             echo "</tr>";
-    
-                            $sql = "SELECT * FROM tb_socio";
+                    
+                            $sql = "SELECT a.cod_aula, m.nm_modalidade, a.vl_mensalidade_aula, a.qnt_vagas_aula, a.horario_aula, s.nm_socio, s.cod_socio, p.cod_pagamento
+                            FROM tb_pagamento AS p 
+                            INNER JOIN tb_aula AS a ON p.cod_aula = a.cod_aula
+                            INNER JOIN tb_modalidade AS m ON a.cod_modalidade = m.cod_modalidade
+                            INNER JOIN tb_socio AS s ON p.cod_socio = s.cod_socio
+                            WHERE a.cod_aula = 2";
                             $resultado = mysqli_query($con, $sql) or die ("Erro ao retornar o valor do banco de dados.");
-                                while ($registro = mysqli_fetch_array($resultado)){
-                
-                                $cod = $registro['cod_socio'];
-                                $nome = $registro['nm_socio'];
-                                $dataadmissao = $registro['dt_admissao_socio'];
-                                $rg = $registro['nm_rg_socio'];
-                                $datanascimento = $registro['dt_nasc_socio'];
-                            
+                            while ($registro = mysqli_fetch_array($resultado)){
+                    
+                                $cod = $registro['cod_pagamento'];
+                                $codaula = $registro['cod_aula'];
+                                $nomemodalidade = $registro['nm_modalidade'];
+                                $vlmensalidade = $registro['vl_mensalidade_aula'];
+                                $qntvagasaula = $registro['qnt_vagas_aula'];
+                                $horarioaula = $registro['horario_aula'];
+                                $nomesocio = $registro['nm_socio'];
+                                $codsocio = $registro['cod_socio'];
+                                
                                 echo "<tr>";
-                                echo "<td id='id' name='id' value=''>".$cod."</td>";
-                                echo "<td>".$nome."</td>";
-                                echo "<td>".date("d/m/Y",strtotime($dataadmissao))."</td>";
-                                echo "<td>".$rg."</td>";
-                                echo "<td>".date("d/m/Y",strtotime($datanascimento))."</td>";
-                                echo "<td><a href='indexSocios.php?acao=deletar&id=$cod'><img src='img/delete_crud.png' alt='Deletar' title='Deletar' registro'>
-                                <a href='indexSocios.php?acao=montar&id=$cod'><img src='img/delete_crud.png' alt='Montar' title='Montar' registro'>
-                                <a href='indexSociosCadastrar.php'><img src='img/insert_crud.png' alt='Inserir' title='Inserir Registro' registro'></td>";
-                                }
-                                echo "</tr></table></center>";
+                                echo "<td>".$codaula."</td>";
+                                echo "<td>".$nomemodalidade."</td>";
+                                echo "<td>".$vlmensalidade."</td>";
+                                echo "<td>".$qntvagasaula."</td>";
+                                echo "<td>".$horarioaula."</td>";
+                                echo "<td>".$nomesocio."</td>";
+                                echo "<td>".$codsocio."</td>";
+                                echo "<td><a href='indexAula2.php?acao=deletar&id=$cod'><img src='img/delete_crud.png' alt='Deletar' title='Deletar' registro'>
+                                <a href='indexAula2.php?acao=montar&id=$cod'><img src='img/update_crud.png' alt='Atualizar' title='Atualizar' registro'>
+                                <a href='indexAulas2Cadastrar.php'><img src='img/insert_crud.png' alt='Inserir' title='Inserir Registro' registro'></td>";
+                            }
+                            echo "</tr></table></center>";
                             break;
                             
                             default:
-                            header("Location:indexLogou.php");
+                            header("Location:indexAula2.php?acao=selecionar");
                             break;
                         }
             ?>
